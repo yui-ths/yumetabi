@@ -61,4 +61,6 @@
 
 <%= link_to "新規投稿へ", new_post_path,class: "btn" %>
 <%= link_to "ダーツの旅へ", random_posts_path,class: "btn" %>
+<% if user_signed_in? %>
 <%= link_to "マイページへ", user_path(current_user.id),class: "btn" %>
+<% end %>
