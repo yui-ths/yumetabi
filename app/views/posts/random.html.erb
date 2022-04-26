@@ -1,0 +1,18 @@
+<% @random.each do |post| %>
+
+    <%= image_tag post.image_url, width: '30%', height: '30%' if post.image? %>
+    <%= image_tag post.image2_url, width: '30%', height: '30%' if post.image2? %>
+    <%= image_tag post.image3_url, width: '30%', height: '30%' if post.image3? %>
+    <%= post.video %>
+    <br>
+    <b>タイトル</b><%= post.title %>
+    <br>
+    <b>本文</b><%= post.body %>
+    <br>
+    <b>カテゴリー</b><%= post.category %>
+    <br>
+    <b>場所</b><%= post.address %>
+<% end %>
+
+<%= link_to "投稿一覧に戻る", posts_path %>
+

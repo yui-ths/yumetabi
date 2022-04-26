@@ -1,0 +1,17 @@
+<%= form_for @post do |f| %>
+    <%= f.label :title %>
+    <%= f.text_field :title, :size => 140%>
+    
+    <%= f.label :body %>
+    <%= f.text_field :body, :size =>"50×10"%>
+    <%= f.label :category %>
+    <%= f.text_field :category, :size => 140%>
+    <%= f.label :address %>
+    <%= f.text_field :address, :size => 140%>
+    <%= f.label :longitude %>
+    <%= f.text_field :longitude, :size => 140%>
+    <%= f.label :latitude %>
+    <%= f.text_field :latitude, :size => 140%>
+    <%= f.label :user_id %>
+    <%= f.text_field :user_id, :size => 140%>
+<% end %>

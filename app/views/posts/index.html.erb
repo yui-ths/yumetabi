@@ -1,0 +1,94 @@
+<div id="map"></div>
+
+<style>
+    #map{
+        height: 500px;
+        width: 100%;
+    }
+</style>
+
+<script>
+    let map
+
+    function initMap() {
+        geocoder = new google.maps.Geocoder()
+
+        map = new google.maps.Map(document.getElementById("map"),{
+            center: {
+                lat: 35.6458437,
+                lng: 135.7046171
+            },
+            zoom: 2,
+        });
+
+        <% @posts.each do |m| %>
+            (function(){
+            var contentString = "住所：<%= m.address %>"; 
+
+            var marker = new google.maps.Marker({
+                position:{lat: <%= m.latitude %>, lng: <%= m.longitude %>},
+                map: map,
+                title: contentString
+            });
+
+            })();
+        <% end %>
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['API_KEY']%>&callback=initMap" async defer></script>
+
+<h3>投稿を検索</h3>
+    <%= form_tag({controller:"posts",action:"index"}, method: :get) do %>
+        <%= text_field_tag :search %>
+        <%= submit_tag '検索する' %>
+<% end %>
+<br>
+<%= page_entries_info @posts %>
+
+<h3>投稿一覧</h3>
+<div class="posts-container"> 
+<% @posts.each do |t| %>
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <% if t.image? %>
+                <%= link_to post_path(t.id) do %>
+                    <%= image_tag t.image_url, class: "d-block w-100" %>
+                <% end %>
+            <% else %>
+                <%= image_tag 'noimage.png', class: "d-block w-100" %>
+            <% end %>
+        </div>
+        <div class="carousel-item">
+            <% if t.image2? %>
+                <%= link_to post_path(t.id) do %>
+                    <%= image_tag t.image2_url, class: "d-block w-100" %>
+                <% end %>
+            <% else %>
+                <%= image_tag 'noimage.png', class: "d-block w-100" %>
+            <% end %>            
+        </div>
+        <div class="carousel-item">
+            <% if t.image3? %>
+                <%= link_to post_path(t.id) do %>
+                    <%= image_tag t.image3_url, class: "d-block w-100" %>
+                <% end %>
+            <% else %>
+                <%= image_tag 'noimage.png', class: "d-block w-100" %>
+            <% end %>
+        </div>  
+    </div>
+</div>  
+<% end %>
+
+</div>
+        
+<%= paginate @posts %>
+
+<%= link_to "ダーツの旅へ", random_posts_path,class: "btn" %>
+<%= link_to "新規投稿へ", new_post_path,class: "btn" %>
+<% if user_signed_in? %>
+<%= link_to "マイページへ", user_path(current_user.id) %>
+
+<% end %>
+

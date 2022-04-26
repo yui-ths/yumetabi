@@ -1,0 +1,53 @@
+<h1>mypage</h1>
+<p><%= @user.name %></p>
+<p><%= @user.email %></p>
+<p><%= @user.profile %></p>
+
+<% if current_user.id == @user.id %>
+    <%= link_to "編集する", edit_user_registration_path %>
+<% end %>
+
+<h2>ユーザーの投稿一覧</h2>
+<div class="mypage-container"> 
+<% @user.posts.each do |t| %>
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <% if t.image? %>
+                <%= link_to post_path(t.id) do %>
+                    <%= image_tag t.image_url, class: "d-block w-100" %>
+                <% end %>
+            <% else %>
+                <%= image_tag 'noimage.png', class: "d-block w-100" %>
+            <% end %>
+        </div>
+        <div class="carousel-item">
+            <% if t.image2? %>
+                <%= link_to post_path(t.id) do %>
+                    <%= image_tag t.image2_url, class: "d-block w-100" %>
+                <% end %>
+            <% else %>
+                <%= image_tag 'noimage.png', class: "d-block w-100" %>
+            <% end %>            
+        </div>
+        <div class="carousel-item">
+            <% if t.image3? %>
+                <%= link_to post_path(t.id) do %>
+                    <%= image_tag t.image3_url, class: "d-block w-100" %>
+                <% end %>
+            <% else %>
+                <%= image_tag 'noimage.png', class: "d-block w-100" %>
+            <% end %>
+        </div>  
+    </div>
+</div>  
+<% end %>
+</div>
+
+<h2>ユーザーがいいねした投稿一覧</h2>
+<% @user.liked_posts.each do |t| %>
+    <%= t.user.name %>
+    <%= t.body %>
+<% end %>
+
+<%= link_to "投稿一覧に戻る", posts_path %>
