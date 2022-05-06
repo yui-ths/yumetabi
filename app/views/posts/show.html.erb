@@ -9,9 +9,9 @@
 
     <div class="show">
         <div class="show-image">
-            <%= image_tag @post.image_url %>
-            <%= image_tag @post.image2_url %>
-            <%= image_tag @post.image3_url %>
+            <%= image_tag @post.image_url, width: '30%', height: '30%' %>
+            <%= image_tag @post.image2_url, width: '30%', height: '30%' %>
+            <%= image_tag @post.image3_url, width: '30%', height: '30%' %>
         </div>
         <div class="show-text">
             <div class="title"><P><%= @post.body %></p></div><br>
