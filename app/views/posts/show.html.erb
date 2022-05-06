@@ -1,101 +1,107 @@
-<h3>投稿詳細</h3>
-
-<div class="post">
-    <div class="show">
-        <p><%= image_tag @post.image_url, width: '30%', height: '30%' %></p>
-        <p><%= image_tag @post.image2_url, width: '30%', height: '30%' %></p>
-        <p><%= image_tag @post.image3_url, width: '30%', height: '30%' %></p>  
-    </div>
-    <div class="show2">
-    <b>本文</b><P><%= @post.body %></p>
-    <b>カテゴリー</b><p><%= @post.category %></p>
-    <b>場所</b><p><%= @post.address %></p>
-    </div>
-
-    <% if user_signed_in? %>
-    <% if current_user.already_liked?(@post) %>
-        <%= link_to post_like_path(@post), method: :delete do %>
-            <i class="fas fa-heart"></i><%= @post.likes.count %>
-        <% end %>
-    <% else %>
-        <%= link_to post_likes_path(@post), method: :post do %>
-            <i class="far fa-heart"></i><%= @post.likes.count %>
-        <% end %>
-    <% end %>
-<% else %>
-    <i class="far fa-heart"></i><%= @post.likes.count %>
-<% end %>
+<div class="show-header">
+    <%= render "header" %>
 </div>
 
-<h6>いいねしたユーザー</h6>
-<% @post.liked_users.each do |user| %>
-    <li><%= user.email %></li>
-<% end %>
+<div class="show-body">
+    <div class="show-title">
+        <h2 class="title">投稿詳細</h2>
+    </div>
 
-<div class="comment-wrapper">
-    <p>コメント一覧</p>
-    <% @comments.each do |c| %>
-        <div>
-            <%= c.user.email unless c.user.blank? %>
-            <br>
-            <%= c.content %>
+    <div class="show">
+        <div class="show-image">
+            <%= image_tag @post.image_url %>
+            <%= image_tag @post.image2_url %>
+            <%= image_tag @post.image3_url %>
         </div>
-            <br>
-    <% end %>
+        <div class="show-text">
+            <div class="title"><P><%= @post.body %></p></div><br>
+            [<%= @post.category %>]<br>
+            <%= image_tag '地図マーカー.jpeg', width: '25px', height: '25px' %><%= @post.address %>
+        </div>
+            <% if user_signed_in? %>
+            <% if current_user.already_liked?(@post) %>
+                <%= link_to post_like_path(@post), method: :delete do %>
+                    <i class="fas fa-heart likes"></i><%= @post.likes.count %>
+                <% end %>
+            <% else %>
+                <%= link_to post_likes_path(@post), method: :post do %>
+                    <i class="far fa-heart non-likes"></i><%= @post.likes.count %>
+                <% end %>
+            <% end %>
+    </div>
+    <div class="like-container">
+        <h4 class="title2">いいねしたユーザー</h4>
+        <% @post.liked_users.each do |user| %>
+            <li><%= user.name %></li>
+        <% end %>
+    </div>
 
-    <% if user_signed_in? %>
-        <%= form_with(model: [@post, @comment], local: true) do |f| %>
-            <%= f.text_area :content %>
-            <%= button_tag type: "submit" do %>
-                <i class="far fa-comments"></i> コメントする
+    <div class="comment-wrapper">
+        <h4 class="title2">コメント一覧</h4>
+        <% @comments.each do |c| %><br>
+            <%= c.user.name unless c.user.blank? %>
+            <%= c.content %><br>
+        <% end %><br>
+        <% if user_signed_in? %>
+            <%= form_with(model: [@post, @comment], local: true) do |f| %>
+                <%= f.text_area :content %>
+                <%= button_tag type: "submit" do %>
+                    <input type="submit" "コメントする" >
+                <% end %>
             <% end %>
         <% end %>
-    <% end %>
-</div>
+    </div>
 
-<div id="map"></div>
+    <div id="map"></div>
 
-<style>
-    #map{
-        height: 400px;
-        width: 1320px;
-    }
-</style>
+    <style>
+        #map{
+            height: 400px;
+            width: 90%;
+            margin: 0 auto;
+        }
+    </style>
 
-<script>
-    let map
+    <script>
+        let map
 
-    function initMap(){
-        geocoder = new google.maps.Geocoder()
+        function initMap(){
+            geocoder = new google.maps.Geocoder()
 
-        map = new google.maps.Map(document.getElementById("map"), {
-            center: {
-                lat: <%= @post.latitude %> ,
-                lng: <%= @post.longitude %>
-            },
-            zoom: 14,
-        });
-
-        (function () {
-            var contentString = "住所:<%= @post.address %>";
-
-            var marker = new google.maps.Marker({
-                position: {
-                    lat: <%= @post.latitude %>,
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: {
+                    lat: <%= @post.latitude %> ,
                     lng: <%= @post.longitude %>
                 },
-                map: map,
-                title: contentString
+                zoom: 14,
             });
 
-        })();
-    }
-</script>
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['API_KEY']%>&callback=initMap" async defer></script>
+            (function () {
+                var contentString = "住所:<%= @post.address %>";
 
-<%= link_to "Tweet一覧に戻る", posts_path %>
-<%= link_to "編集する", edit_post_path(@post.id) %>
+                var marker = new google.maps.Marker({
+                    position: {
+                        lat: <%= @post.latitude %>,
+                        lng: <%= @post.longitude %>
+                    },
+                    map: map,
+                    title: contentString
+                });
+
+            })();
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['API_KEY']%>&callback=initMap" async defer></script>
 
 
-<%= button_to "削除する", post_path(@post.id), method: :delete %>
-    
+    <div class="show-botan">
+        <%= button_to "編集する", edit_post_path(@post.id), method: :get, class:"show-botan2" %>
+        <%= button_to "削除する", post_path(@post.id), method: :delete, class:"show-botan2" %>
+    </div>
+</div>
+
+<footer>
+    <small>Copyright © 2022 Yui Takahashi All rights Reserved.</small>
+</footer>
+
+<% end %>

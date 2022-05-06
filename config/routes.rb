@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :posts do
     collection do
       get :random
+      get :random2
       get :top
     end
     resources :likes, only: [:create, :destroy]

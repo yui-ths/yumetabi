@@ -1,9 +1,19 @@
-<div id="map"></div>
+<div class="index-header">
+    <%= render "header" %>
+    <%= image_tag '6.jpg' %>
+</div>
 
+<div class="index-body">
+
+<div class="title-index">
+    <h2 class="title">投稿一覧</h2>
+</div>
+<div id="map" class="index-map"></div>
 <style>
     #map{
         height: 500px;
-        width: 100%;
+        width: 90%;
+        margin: 0 auto;
     }
 </style>
 
@@ -37,15 +47,13 @@
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['API_KEY']%>&callback=initMap" async defer></script>
 
-<h3>投稿を検索</h3>
-    <%= form_tag({controller:"posts",action:"index"}, method: :get) do %>
-        <%= text_field_tag :search %>
-        <%= submit_tag '検索する' %>
-<% end %>
-<br>
-<%= page_entries_info @posts %>
+<div class="search">
+        <%= form_tag({controller:"posts",action:"index"}, method: :get) do %>
+            <%= text_field_tag :search %>
+            <input type="submit" value="&#xf002; 投稿を検索" class="fas">
+        <% end %><br>
+</div>
 
-<h3>投稿一覧</h3>
 <div class="posts-container"> 
 <% @posts.each do |t| %>
 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
@@ -85,10 +93,16 @@
         
 <%= paginate @posts %>
 
-<%= link_to "ダーツの旅へ", random_posts_path,class: "btn" %>
-<%= link_to "新規投稿へ", new_post_path,class: "btn" %>
-<% if user_signed_in? %>
-<%= link_to "マイページへ", user_path(current_user.id) %>
+<div class="botan-flex">
+    <%= link_to "ダーツの旅へ", random2_posts_path,class: "botan" %>
+    <%= link_to "新規投稿へ", new_post_path,class: "botan" %>
+    <% if user_signed_in? %>
+    <%= link_to "マイページへ", user_path(current_user.id),class: "botan" %>
+</div>
 
 <% end %>
 
+</div>
+<footer>
+    <small>Copyright © 2022 Yui Takahashi All rights Reserved.</small>
+</footer>

@@ -1,37 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>YuiPage</title>
+    <title>yumetabi</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_pack_tag 'application' %>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Reggae+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol&display=swap" rel="stylesheet">
   </head>
 
   <body>
-    <header>
-      <h1><%= link_to "ユメタビ", top_posts_path %></h1>
-      <div class="header-list">
-      <ul>
-        <li><%= link_to "map", posts_path %>
-        <li><%= link_to "share", new_post_path %></li>
-        <li><%= link_to "darts", random_posts_path %></li>
-        <% if user_signed_in? %>
-          <li><%= link_to "mypage", user_path(current_user.id) %>
-        <% else %>
-          <li><%= link_to "login", posts_path %>
-        <% end %>
-      </ul>
-      </div>
-    </header>
+    <main>
       <%= yield %>
     </main>
-    <footer>
-      <small>Copyright © 2022 Yui Takahashi All rights Reserved.</small>
-    </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>

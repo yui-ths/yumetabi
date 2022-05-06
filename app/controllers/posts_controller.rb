@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   
-  before_action :authenticate_user!, except: [:index, :show, :top, :random]
+  before_action :authenticate_user!, except: [:index, :show, :top, :random, :random2]
   def top
   end
 
@@ -57,6 +57,9 @@ end
     post = Post.find(params[:id])
     post.destroy
     redirect_to action: :index
+  end
+
+  def random2
   end
 
   private

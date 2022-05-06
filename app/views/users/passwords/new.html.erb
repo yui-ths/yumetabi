@@ -1,16 +1,28 @@
-<h2>Forgot your password?</h2>
+<div class="password-again-header">
+    <%= render "users/header" %>
+</div>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "users/shared/error_messages", resource: resource %>
+<div class="password-again">
+  <div class="password-again-box">
+    <h2>Forgot your password?</h2><br>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <%= render "users/shared/error_messages", resource: resource %>
+
+      <div class="field">
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email" %>
+      </div><br>
+
+      <div class="actions">
+        <%= f.submit "Send an Email" %>
+      </div>
+    <% end %>
+
+    <%= render "users/shared/links" %>
   </div>
+</div>
 
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
-  </div>
-<% end %>
+<footer>
+  <small>Copyright © 2022 Yui Takahashi All rights Reserved.</small>
+</footer>
 
-<%= render "users/shared/links" %>
