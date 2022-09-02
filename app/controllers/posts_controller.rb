@@ -42,21 +42,32 @@ end
 
   def edit
     @post = Post.find(params[:id])
+    unless @post.user == current_user
+      redirect_to new_post_path
+    end
   end
 
   def update
-    post = Post.find(params[:id])
-    if post.update(post_params)
-      redirect_to :action => "show", :id => post.id
+    @post = Post.find(params[:id])
+    if post.user != current_user
+      redirect_to :new_post_path
     else
-      redirect_to :action => "new"
+      if @post.update(post_params)
+      redirect_to new_post_path
+      else
+        render :edit
+      end
     end
   end
 
   def destroy
-    post = Post.find(params[:id])
-    post.destroy
-    redirect_to action: :index
+    @posts = Post.all
+    @post = Post.find(params[:id])
+    if @post.user != current_user
+      redirect_to new_post_path
+    else
+      @post.destroy
+    end
   end
 
   def random2

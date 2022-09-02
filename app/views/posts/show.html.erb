@@ -39,8 +39,8 @@
     <div class="comment-wrapper">
         <h4 class="title2">コメント一覧</h4>
         <% @comments.each do |c| %><br>
-            <%= c.user.name unless c.user.blank? %>
             <%= c.content %><br>
+            <h5>by</h5><%= c.user.name unless c.user.blank? %>
         <% end %><br>
         <% if user_signed_in? %>
             <%= form_with(model: [@post, @comment], local: true) do |f| %>
